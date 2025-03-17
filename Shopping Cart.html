@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Trades.css">
+  <title>Shopping Cart - AgriTrade</title>
+</head>
+<body>
+
+  <nav>
+    <div class="Bar">
+      <i class="fa fa-book"> AGRITRADE</i>
+    </div>
+    <div class="Header">
+      <a href="Home.html"><p>Home</p></a>
+      <a href="Product.html"><p>Products</p></a>
+      <a href="Shopping Cart.html"><p>Shopping Cart</p></a>
+      <a href="Contact.html"><p>Contact</p></a>
+      <i class="fa fa-search"></i>
+    </div>
+  </nav>
+
+  <div class="cart-container">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-items">
+      <p>Your cart is empty. Add items to the cart!</p>
+    </div>
+    <div id="cart-total">
+      <p>Total: $<span id="total-price">0.00</span></p>
+    </div>
+    <button onclick="checkout()">Proceed to Checkout</button>
+  </div>
+
+  
+ <script>
+    window.onload = function() {
+      const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartContainer = document.getElementById("cart-items");
+      const totalPriceElement = document.getElementById("total-price");
+
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        totalPriceElement.textContent = "0.00"; // Set total to 0 if cart is empty
+      } else {
+        cartContainer.innerHTML = ""; // Clear the "empty cart" message
+        let total = 0;
+
+        cartItems.forEach((item, index) => {
+          const cartItemDiv = document.createElement("div");
+          cartItemDiv.classList.add("cart-item");
+
+          const itemHtml = `
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+              <p><strong>${item.name}</strong></p>
+              <p>Price: $${item.price}</p>
+              <p>Quantity: 
+                <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+              </p>
+              <button class="remove-item" onclick="removeItem(${index})">Remove</button>
+            </div>
+          `;
+
+          cartItemDiv.innerHTML = itemHtml;
+          cartContainer.appendChild(cartItemDiv);
+
+          // Calculate the total price
+          total += item.price * item.quantity;
+        });
+
+        totalPriceElement.textContent = total.toFixed(2); // Update total price
+      }
+    };
+
+    function updateQuantity(index, change) {
+      const cartItems = JSON.parse(localStorage.getItem("cart"));
+      const item = cartItems[index];
+      item.quantity += change;
+
+      if (item.quantity < 1) item.quantity = 1; // Prevent quantity from going below 1
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+
+      // Re-load the page to update quantities
+      window.onload();
+    }
+
+    function removeItem(index) {
+      const cartItems = JSON.parse(localStorage.getItem("cart"));
+      cartItems.splice(index, 1); // Remove the item at the specified index
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+
+      // Re-load the page to reflect the changes
+      window.onload();
+    }
+
+    function checkout() {
+      alert("Proceeding to checkout...");
+    }
+  </script>
+</body>
+</html>

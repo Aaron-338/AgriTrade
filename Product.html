@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Trades.css">
+  <title>Product Page - AgriTrade</title>
+</head>
+<body>
+
+  <nav>
+    <div class="Bar">
+      <i class="fa fa-book"> AGRITRADE</i>
+    </div>
+    <div class="Header">
+      <a href="Home.html"><p>Home</p></a>
+      <a href="Product.html"><p>Products</p></a>
+      <a href="Shopping Cart.html"><p>Shopping Cart</p></a>
+      <a href="Contact.html"><p>Contact</p></a>
+      <i class="fa fa-search"></i>
+    </div>
+  </nav>
+
+  <div class="product-page-container">
+    <h1>Our Products</h1>
+
+    <div class="product-grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <img src="Tomato.jpg" alt="Fresh Tomatoes" class="product-image">
+        <h3 class="product-name">Fresh Tomatoes</h3>
+        <p class="product-price">M10.00</p>
+        <button onclick="addToCart('Fresh Tomatoes', 10.00, 'images/tomato.jpg')">Add to Cart</button>
+
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card">
+        <img src="pork.jpg" alt="Fresh Carrots" class="product-image">
+        <h3 class="product-name">Pork</h3>
+        <p class="product-price">M8.00</p>
+       <button onclick="addToCart('Pig', 8.00, 'images/pork.jpg')">Add to Cart</button>
+
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card">
+        <img src="Pumpkin.jpg" alt="Organic Pumpkin" class="product-image">
+        <h3 class="product-name">Organic Pumpkin</h3>
+        <p class="product-price">M12.00</p>
+      <button onclick="addToCart('Organic Pumpkin', 12.00, 'images/Pumpkin.jpg')">Add to Cart</button>
+
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card">
+        <img src="Onion.jpg" alt="Fresh Onions" class="product-image">
+        <h3 class="product-name">Fresh Onions</h3>
+        <p class="product-price">M5.00</p>
+        <button onclick="addToCart('Fresh Onions', 5.00, 'images/Onion.jpg')">Add to Cart</button>
+
+      </div>
+ <!-- Product 5 -->
+      <div class="product-card">
+        <img src="mutton.jpg" alt="Sheep" class="product-image">
+        <h3 class="product-name">Mutton</h3>
+        <p class="product-price">M10.00</p>
+       <button onclick="addToCart('Sheep', 10.00, 'images/mutton.jpg')">Add to Cart</button>
+
+      </div>
+ <!-- Product 6 -->
+      <div class="product-card">
+        <img src="milk.png" alt="Fresh Cow milk" class="product-image">
+        <h3 class="product-name">Fresh Cow milk</h3>
+        <p class="product-price">M15.00</p>
+        <button onclick="addToCart('Fresh Cow milk', 15.00, 'images/milk.png')">Add to Cart</button>
+
+      </div>
+ <!-- Product 7 -->
+      <div class="product-card">
+        <img src="eggs.jpg" alt="Fresh Eggs" class="product-image">
+        <h3 class="product-name">Fresh Eggs</h3>
+        <p class="product-price">M3.00</p>
+  <button onclick="addToCart('Fresh Eggs', 3.00, 'images/eggs.jpg')">Add to Cart</button>
+
+      </div>
+ <!-- Product 8 -->
+      <div class="product-card">
+        <img src="Maize.jpg" alt="Fresh Maize" class="product-image">
+        <h3 class="product-name">Fresh Maize</h3>
+        <p class="product-price">M30.00</p>
+       <button onclick="addToCart('Fresh Maize', 30.00, 'images/maize.jpg')">Add to Cart</button>
+
+      </div>
+<!-- Product 9 -->
+      <div class="product-card">
+        <img src="beef.jpg" alt="Fresh Maize" class="product-image">
+        <h3 class="product-name">Beef</h3>
+        <p class="product-price">M15.00</p>
+       <button onclick="addToCart('Beef', 15.00, 'images/beef.jpg')">Add to Cart</button>
+      </div>
+<!-- Product 10 -->
+      <div class="product-card">
+        <img src="Potatoes.jpg" alt="Fresh Maize" class="product-image">
+        <h3 class="product-name">Potatoes</h3>
+        <p class="product-price">M45.00</p>
+       <button onclick="addToCart('Potatoes', 45.00, 'images/Potatoes.jpg')">Add to Cart</button>
+      </div>
+
+<!-- Product 11 -->
+      <div class="product-card">
+        <img src="chicken.jpg"  class="product-image">
+        <h3 class="product-name">Chicken</h3>
+        <p class="product-price">M90.00</p>
+       <button onclick="addToCart('Chicken', 90.00, 'images/chicken.jpg')">Add to Cart</button>
+      </div>
+
+<!-- Product 12 -->
+      <div class="product-card">
+        <img src="Sorghum.jpg" alt="Fresh Maize" class="product-image">
+        <h3 class="product-name">Sorghum</h3>
+        <p class="product-price">M100.00</p>
+       <button onclick="addToCart('Sorghum', 100.00, 'images/Sorghum.jpg')">Add to Cart</button>
+      </div>
+
+          </div>
+  </div>
+
+<script>
+  // Modified addToCart function to include product image
+  function addToCart(productName, productPrice, productImage) {
+    // Create the cart item with product name, price, quantity, and image
+    const cartItem = {
+      name: productName,
+      price: productPrice,
+      quantity: 1,  // Default quantity is 1
+      image: productImage  // Store the image URL
+    };
+
+    // Retrieve existing cart from localStorage or initialize an empty array
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Check if the item already exists in the cart
+    const existingItemIndex = cart.findIndex(item => item.name === productName);
+
+    if (existingItemIndex >= 0) {
+      // If the item already exists in the cart, just increase the quantity
+      cart[existingItemIndex].quantity += 1;
+    } else {
+      // If the item does not exist in the cart, add it as a new item
+      cart.push(cartItem);
+    }
+
+    // Save the updated cart to localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Display an alert to the user
+    alert(`${productName} has been added to your cart!`);
+  }
+</script>
+</body>
+</html>
