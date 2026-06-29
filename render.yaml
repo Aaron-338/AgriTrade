@@ -1,0 +1,61 @@
+services:
+  # Django Backend API Service
+  - type: web
+    name: agritrade-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    region: Frankfurt
+    plan: free
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: ALLOWED_HOSTS
+        value: "*.onrender.com,localhost,127.0.0.1"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://agritrade-frontend.onrender.com,http://localhost:3000"
+      - key: IN_DOCKER
+        value: True
+      - key: USE_POSTGRES
+        value: True
+      - key: DB_NAME
+        fromDatabase:
+          name: agritrade-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: agritrade-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: agritrade-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: agritrade-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: agritrade-db
+          property: port
+      - key: SECRET_KEY
+        generateValue: true
+    buildCommand: echo "Building backend..."
+    startCommand: /app/entrypoint.sh
+
+  # Next.js Frontend Service
+  - type: web
+    name: agritrade-frontend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: Frankfurt
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: "https://agritrade-backend.onrender.com"
+    buildCommand: echo "Building frontend..."
+    startCommand: node server.js
+
+databases:
+  - name: agritrade-db
+    plan: free
+    region: Frankfurt 
